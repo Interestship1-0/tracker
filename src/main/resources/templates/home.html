@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Coronavirus Tracker Dashboard</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        .bs-example{
+            margin: 20px;
+        }
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,5);
+            transition: 0.3s;
+            width: 80%;
+            background-color: lightgoldenrodyellow;
+
+        }
+
+        .card:hover {
+            box-shadow: 0 24px 48px 0 rgba(0,0,0,10);
+        }
+
+        .container1 {
+            padding: 2px 16px;
+        }
+        li {
+            float: left;
+            width: 25%;
+            height: 100%;
+            padding: 0 10px;
+        }
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #c1 {
+            background-color: #ffA500;
+            width: 100%;
+            height: 100%;
+        }
+        #c2 {
+            background-color: orangered;
+            width: 100%;
+            height: 100%;
+        }
+        #c3 {
+            background-color: lightgreen;
+            width: 100%;
+            height: 100%;
+        }
+        #c4 {
+            background-color: #add8e6;
+            width: 100%;
+            height: 100%;
+        }
+        #t0 {
+            float: left;
+            width: 25%;
+        }
+        #t2 {
+            float: left;
+            width: 15%;
+        }
+        #t3 {
+            float: left;
+            width: 20%;
+        }
+        #t1 {
+            float: left;
+            width: 40%;
+        }
+        .bouncy{
+             animation:bouncy 5s infinite linear;
+             position:relative;
+        }
+
+    </style>
+</head>
+
+<body>
+<!--<p th:text="${test}"></p>-->
+<div>
+
+    <br/>
+<div align="center">
+
+    <div class="card" align="center">
+    <div class="container1" align="center">
+        <h1 align="center">Coronavirus Tracker Dashboard</h1>
+        <h1 align="center" class="display-4" th:text="${totalReportedCases}"></h1>
+
+        <p class="lead">Total cases reported as of today</p>
+        <hr class="my-4">
+        <p>
+            <span>New cases reported since previous day:</span>
+            <span th:text="${totalNewCases}"></span>
+        </p>
+
+    </div>
+</div>
+</div>
+<br/>
+<div>
+     <ul class="row">
+         <li>
+             <div class="card" id="c1">
+                 <div class="container1">
+                     <p align="center"><b>AFFECTED</b></p>
+                     <p align="center" th:text="${totalReportedCases}"></p>
+                 </div>
+             </div>
+         </li>
+         <li>
+             <div class="card" id="c2">
+                 <div class="container1">
+                     <p align="center"><b>DEATH</b></p>
+                     <p align="center" th:text="${totalDeaths}"></p>
+                 </div>
+             </div>
+         </li>
+         <li>
+             <div class="card" id="c3">
+                 <div class="container1">
+                     <p align="center"><b>RECOVERED</b></p>
+                     <p align="center" th:text="${totalrecovered}"></p>
+                 </div>
+             </div>
+         </li>
+         <li>
+             <div class="card" id="c4">
+                 <div class="container1">
+                     <p align="center" color="black"><b>ACTIVE</b></p>
+                     <p align="center" th:text="${totalActive}"></p>
+                 </div>
+             </div>
+         </li>
+     </ul>
+</div>
+<div>
+    <a href="graph.html" class="bouncy" style="animation-delay:0.21s">Graph</a>
+</div>
+    <br/>
+    <div class="bs-example">
+        <table class="table table-hover" id="t0">
+            <tr bgcolor="#5f9ea0">
+                <th>State </th>
+                <th>Country</th>
+            </tr>
+
+
+            <div th:each="locationStat : ${locationStats}">
+                <tr>
+                    <td th:text="${locationStat.getState()}">0</td>
+                    <td th:text="${locationStat.getCountry()}">0</td>
+                </tr>
+            </div>
+        </table>
+    <table class="table table-hover" id="t1">
+        <tr bgcolor="#5f9ea0">
+<!--            <th>State</th>-->
+<!--            <th>Country</th>-->
+<!--            <th>Death Cases</th>-->
+<!--            <th>Recovered Cases</th>-->
+            <th>Confirmed Cases</th>
+            <th>Changes since last day</th>
+        </tr>
+
+
+            <div th:each="locationStat : ${locationStats}">
+                <tr>
+<!--                <td th:text="${locationStat.state}">null</td>-->
+<!--                <td th:text="${locationStat.country}">null</td>-->
+<!--                <td th:text="${locationStat.totalRecovered}">0</td>-->
+                <td th:text="${locationStat.latestTotalCases}">0</td>
+                <td th:text="${locationStat.diffFromPrevDay}">0</td>
+                </tr>
+            </div>
+<!--            <div th:each="death : ${deaths}">-->
+<!--                <td th:text="${death.death}">0</td>-->
+<!--            </div>-->
+    </table>
+
+        <table class="table table-hover" id="t2">
+            <tr bgcolor="#5f9ea0">
+                <th>Deaths</th>
+            </tr>
+
+
+                 <div th:each="death : ${deaths}">
+                     <tr>
+                     <td th:text="${death.death}">0</td>
+                     </tr>
+                 </div>
+
+
+        </table>
+
+        <table class="table table-hover" id="t3">
+            <tr bgcolor="#5f9ea0">
+                <th>Recovery</th>
+            </tr>
+            <div th:each="recovery : ${recovery}">
+                <tr>
+                    <td th:text="${recovery.recovery}">0</td>
+                </tr>
+            </div>
+        </table>
+
+    </div>
+</div>
+</body>
+
+</html>
